@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useInventory } from '../hooks/useInventory';
 import { useLoans } from '../hooks/useLoans';
 import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../contexts/ThemeContext'; // Import Theme context
+import { useTheme } from '../contexts/ThemeContext';
 import SearchBar from '../components/dashboard/SearchBar';
 import ItemList from '../components/dashboard/ItemList';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -11,7 +11,7 @@ import { Package, Clock, AlertCircle, Sun, Moon } from 'lucide-react';
 
 export default function StudentDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
-  const { theme, toggleTheme } = useTheme(); // Access theme and toggle function
+  const { theme, toggleTheme } = useTheme();
   const { items, loading: itemsLoading, error: itemsError, refetch: refetchItems } = useInventory();
   const { loans, loading: loansLoading, returnItem } = useLoans();
   const { user } = useAuth();
@@ -51,8 +51,7 @@ export default function StudentDashboard() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-         
-          <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
+          <h1 className="text-2xl font-bold text-black dark:text-white">
             Student Dashboard
           </h1>
         </div>
@@ -66,31 +65,31 @@ export default function StudentDashboard() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white dark:bg-gray-800 text-black dark:text-white rounded-lg shadow-md p-6">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-yellow-400">Active Loans</p>
-              <p className="mt-2 text-3xl font-semibold">{myActiveLoans.length}</p>
+              <p className="mt-2 text-3xl font-semibold text-black dark:text-white">{myActiveLoans.length}</p>
             </div>
             <Package className="w-8 h-8 text-yellow-400" />
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 text-black dark:text-white rounded-lg shadow-md p-6">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-yellow-400">Available Items</p>
-              <p className="mt-2 text-3xl font-semibold">{availableItems.length}</p>
+              <p className="mt-2 text-3xl font-semibold text-black dark:text-white">{availableItems.length}</p>
             </div>
             <Clock className="w-8 h-8 text-yellow-400" />
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 text-black dark:text-white rounded-lg shadow-md p-6">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-yellow-400">Overdue Items</p>
-              <p className="mt-2 text-3xl font-semibold">{overdueLoans.length}</p>
+              <p className="mt-2 text-3xl font-semibold text-black dark:text-white">{overdueLoans.length}</p>
             </div>
             <AlertCircle className="w-8 h-8 text-yellow-400" />
           </div>
@@ -100,12 +99,12 @@ export default function StudentDashboard() {
       {/* Active Loans Section */}
       {myActiveLoans.length > 0 && (
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <h2 className="text-lg font-semibold mb-4">My Active Loans</h2>
+          <h2 className="text-lg font-semibold mb-4 text-black dark:text-white">My Active Loans</h2>
           <div className="space-y-4">
             {myActiveLoans.map(loan => (
               <div key={loan.id} className="flex justify-between items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                 <div>
-                  <p className="font-medium">{loan.items?.name}</p>
+                  <p className="font-medium text-black dark:text-white">{loan.items?.name}</p>
                   <p className="text-sm text-gray-500 dark:text-gray-300">
                     Due: {format(new Date(loan.expected_return_date), 'MMM d, yyyy')}
                   </p>
@@ -137,7 +136,7 @@ export default function StudentDashboard() {
       {/* Available Items Section */}
       <div className="space-y-6">
         <div className="flex flex-col space-y-4">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Available Items</h2>
+          <h2 className="text-2xl font-bold text-black dark:text-white">Available Items</h2>
           <div className="max-w-xl">
             <SearchBar
               value={searchQuery}
@@ -150,7 +149,7 @@ export default function StudentDashboard() {
           <ItemList items={availableItems} />
         ) : (
           <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-            <p className="text-gray-500 dark:text-gray-300">No items available matching your search criteria.</p>
+            <p className="text-black dark:text-gray-300">No items available matching your search criteria.</p>
           </div>
         )}
       </div>

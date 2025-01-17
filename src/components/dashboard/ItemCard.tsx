@@ -42,32 +42,36 @@ export default function ItemCard({ item }: ItemCardProps) {
 
   return (
     <>
-      <div className="bg-white dark:bg-gray-800 text-black dark:text-white rounded-lg shadow-md p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <div className="space-y-4">
           <div className="flex items-start justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-yellow-400">{item.name}</h3>
-              <p className="text-sm text-white mt-1">{item.description}</p>
+              <h3 className="text-lg font-semibold text-black dark:text-yellow-400">
+                {item.name}
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                {item.description}
+              </p>
             </div>
           </div>
 
           <div className="space-y-2">
             {item.categories?.name && (
-              <div className="flex items-center text-sm text-white">
+              <div className="flex items-center text-sm text-gray-700 dark:text-gray-200">
                 <Tag className="w-4 h-4 mr-2 text-yellow-400" />
                 <span>{item.categories.name}</span>
               </div>
             )}
             
             {item.location && (
-              <div className="flex items-center text-sm text-white">
+              <div className="flex items-center text-sm text-gray-700 dark:text-gray-200">
                 <MapPin className="w-4 h-4 mr-2 text-yellow-400" />
                 <span>{item.location}</span>
               </div>
             )}
 
             {item.condition && (
-              <div className="flex items-center text-sm text-white">
+              <div className="flex items-center text-sm text-gray-700 dark:text-gray-200">
                 <Package className="w-4 h-4 mr-2 text-yellow-400" />
                 <span>Condition: {item.condition}</span>
               </div>
