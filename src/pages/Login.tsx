@@ -32,7 +32,7 @@ export default function Login() {
               Welcome to
             </h1>
             <h2 className="text-[5rem] leading-tight font-black text-black">
-              FABLAB
+              FABLABssssssssss
             </h2>
             <p className="text-lg text-black/80 max-w-md mt-6">
               Manage and track CESI FABLAB's inventory in an efficient and user-friendly way. Log in to explore its features.
