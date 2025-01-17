@@ -51,11 +51,7 @@ export default function StudentDashboard() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <img
-            src="/src/images/logo.png"
-            alt="Lab'CESI Logo"
-            className="w-14 h-auto"
-          />
+         
           <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
             Student Dashboard
           </h1>
