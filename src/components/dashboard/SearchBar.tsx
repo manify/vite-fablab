@@ -17,7 +17,7 @@ export default function SearchBar({ value, onChange, placeholder }: SearchBarPro
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="block w-full pl-10 pr-3 py-3 border border-yellow-400 rounded-lg leading-5 bg-black text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 sm:text-sm"
+        className="block w-full pl-10 pr-3 py-3 border border-yellow-400 rounded-3xl leading-5 bg-black text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 sm:text-sm"
         placeholder={placeholder}
       />
     </div>
