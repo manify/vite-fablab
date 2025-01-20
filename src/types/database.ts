@@ -27,6 +27,7 @@ export interface Item {
   description: string | null;
   category_id: string;
   qr_code: string;
+  barcode: string; 
   status: ItemStatus;
   condition: string | null;
   location: string | null;
@@ -35,6 +36,7 @@ export interface Item {
   categories?: {
     name: string;
   };
+  quantity: number;
 }
 
 export interface Loan {

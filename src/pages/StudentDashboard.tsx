@@ -39,8 +39,8 @@ export default function StudentDashboard() {
     new Date(loan.expected_return_date) < new Date()
   );
 
-  const handleReturnItem = async (loanId: string) => {
-    const success = await returnItem(loanId);
+  const handleReturnItem = async (loanId: string, itemId: string) => {
+    const success = await returnItem(loanId, itemId);
     if (success) {
       refetchItems();
     }
@@ -116,7 +116,7 @@ export default function StudentDashboard() {
                     {new Date(loan.expected_return_date) < new Date() ? 'Overdue' : 'Active'}
                   </span>
                   <button
-                    onClick={() => handleReturnItem(loan.id)}
+                    onClick={() => handleReturnItem(loan.id, loan.item_id)}
                     className="px-3 py-1 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 dark:hover:bg-green-500"
                   >
                     Return

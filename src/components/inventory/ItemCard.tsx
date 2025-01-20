@@ -1,6 +1,6 @@
 import React from 'react';
 import { Item } from '../../types/database';
-import { Package, MapPin, Info } from 'lucide-react';
+import { Package, MapPin, Info, Box } from 'lucide-react';
 import QRCode from 'qrcode.react';
 
 interface ItemCardProps {
@@ -33,6 +33,11 @@ export default function ItemCard({ item, onEdit }: ItemCardProps) {
           }`}>
             {item.status}
           </span>
+        </div>
+
+        <div className="flex items-center text-sm text-gray-600">
+          <Box className="w-4 h-4 mr-2" />
+          <span>Quantity: {item.quantity}</span>
         </div>
         
         {item.location && (

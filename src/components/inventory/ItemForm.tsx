@@ -15,6 +15,7 @@ export default function ItemForm({ item, onSubmit, onClose }: ItemFormProps) {
     status: 'available',
     condition: '',
     location: '',
+    quantity: 1, // Added default quantity
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -72,6 +73,18 @@ export default function ItemForm({ item, onSubmit, onClose }: ItemFormProps) {
                 </option>
               ))}
             </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Quantity</label>
+            <input
+              type="number"
+              min="0"
+              value={formData.quantity || 1}
+              onChange={e => setFormData(prev => ({ ...prev, quantity: parseInt(e.target.value) || 0 }))}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              required
+            />
           </div>
 
           <div>
