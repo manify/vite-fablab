@@ -7,11 +7,11 @@ import SearchBar from '../components/dashboard/SearchBar';
 import ItemList from '../components/dashboard/ItemList';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { format } from 'date-fns';
-import { Package, Clock, AlertCircle, Sun, Moon } from 'lucide-react';
+import { Package, Clock, AlertCircle } from 'lucide-react';
 
 export default function StudentDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   const { items, loading: itemsLoading, error: itemsError, refetch: refetchItems } = useInventory();
   const { loans, loading: loansLoading, returnItem } = useLoans();
   const { user } = useAuth();
@@ -55,7 +55,6 @@ export default function StudentDashboard() {
             Student Dashboard
           </h1>
         </div>
-        
       </div>
 
       {/* Stats Cards */}
@@ -140,11 +139,19 @@ export default function StudentDashboard() {
             />
           </div>
         </div>
-        {availableItems.length > 0 ? (
-          <ItemList items={availableItems} />
+        {searchQuery.trim() ? (
+          availableItems.length > 0 ? (
+            <ItemList items={availableItems} />
+          ) : (
+            <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+              <p className="text-black dark:text-gray-300">No items available matching your search criteria.</p>
+            </div>
+          )
         ) : (
           <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-            <p className="text-black dark:text-gray-300">No items available matching your search criteria.</p>
+            <p className="text-gray-500 dark:text-gray-300">
+              Start searching to see available items.
+            </p>
           </div>
         )}
       </div>
