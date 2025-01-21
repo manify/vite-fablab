@@ -14,19 +14,21 @@ export default function ProfilePage() {
   const handleSubmit = async (data: Partial<Profile>) => {
     try {
       if (!profile?.id) throw new Error('Profile ID not found');
-
       const { error: updateError } = await supabase
         .from('profiles')
         .update(data)
-        .eq('id', profile.id);
+        .eq('id', profile.id)
+        .single();
 
-      if (updateError) throw updateError;
+      if (updateError) {
+        console.error('Update error:', updateError);
+        throw new Error(`Failed to update profile: ${updateError.message}`);
+      }
 
       await refetch();
       toast.success('Profile updated successfully');
     } catch (err) {
-      console.error('Update error:', err);
-      toast.error('Failed to update profile');
+      toast.error(err instanceof Error ? err.message : 'Failed to update profile');
     }
   };
 
@@ -35,39 +37,59 @@ export default function ProfilePage() {
       if (!profile?.id) throw new Error('Profile ID not found');
       setUploading(true);
 
-      // Simple file validation
+      console.log('Starting upload process for file:', {
+        name: file.name,
+        type: file.type,
+        size: file.size,
+      });
+
+      // File validation
+      if (!file.type.match(/^image\/(jpeg|png|gif|webp)$/)) {
+        toast.error('Please select a valid image file (JPEG, PNG, GIF, or WebP)');
+        setUploading(false);
+        return;
+      }
+      
       if (file.size > 5 * 1024 * 1024) {
-        throw new Error('File size must be less than 5MB');
+        toast.error('File size must be less than 5MB');
+        setUploading(false);
+        return;
       }
 
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}.${fileExt}`;
+      const fileExt = file.type.split('/')[1];
+      const cleanFileName = `${profile.id.replace(/-/g, '')}_${Date.now()}.${fileExt}`;
 
-      // Upload file
-      const { error: uploadError } = await supabase.storage
+      const fileBlob = new Blob([await file.arrayBuffer()], { type: file.type });
+
+      const { data: uploadData, error: uploadError } = await supabase.storage
         .from('profile-pictures')
-        .upload(fileName, file);
+        .upload(cleanFileName, fileBlob, {
+          cacheControl: '3600',
+          upsert: true,
+        });
 
-      if (uploadError) throw uploadError;
-
-      // Get URL
-      const { data } = supabase.storage
-        .from('profile-pictures')
-        .getPublicUrl(fileName);
-
-      if (data?.publicUrl) {
-        // Update profile with new URL
-        await supabase
-          .from('profiles')
-          .update({ avatar_url: data.publicUrl })
-          .eq('id', profile.id);
-
-        await refetch();
-        toast.success('Profile picture updated successfully');
+      if (uploadError) {
+        console.error('Upload error details:', uploadError);
+        throw new Error(`Upload failed: ${uploadError.message}`);
       }
+
+      if (!uploadData?.path) {
+        throw new Error('Upload succeeded but no path returned');
+      }
+
+      const { data: urlData } = supabase.storage
+        .from('profile-pictures')
+        .getPublicUrl(uploadData.path);
+
+      if (!urlData?.publicUrl) {
+        throw new Error('Failed to get public URL');
+      }
+
+      await handleSubmit({ avatar_url: urlData.publicUrl });
+      toast.success('Profile picture updated successfully');
     } catch (err) {
       console.error('Upload error:', err);
-      toast.error('Failed to upload profile picture');
+      toast.error(err instanceof Error ? err.message : 'Failed to upload profile picture');
     } finally {
       setUploading(false);
     }
