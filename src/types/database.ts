@@ -35,6 +35,7 @@ export interface Item {
   created_at: string;
   updated_at: string;
   categories?: {
+    id(id: any): boolean;
     name: string;
   };
   quantity: number;
