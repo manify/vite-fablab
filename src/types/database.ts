@@ -19,6 +19,7 @@ export interface Profile {
   department: string | null;
   created_at: string;
   updated_at: string;
+  avatar_url: string | null;
 }
 
 export interface Item {
