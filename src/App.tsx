@@ -14,6 +14,7 @@ const Profile = lazy(() => import('./pages/Profile'));
 const Login = lazy(() => import('./pages/Login'));
 const Signup = lazy(() => import('./pages/Signup'));
 const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+const QRBorrow = lazy(() => import('./pages/qr-borrow/[itemId]'));
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
@@ -63,6 +64,11 @@ function AppRoutes() {
         <Route path="profile" element={
           <Suspense fallback={<LoadingSpinner />}>
             <Profile />
+          </Suspense>
+        } />
+        <Route path="qr-borrow/:itemId" element={
+          <Suspense fallback={<LoadingSpinner />}>
+            <QRBorrow />
           </Suspense>
         } />
       </Route>

@@ -13,10 +13,9 @@ interface ItemCardProps {
 }
 
 // Update QR code generation function
-const generateQRContent = (itemId: string, token: string | null): string => {
+const generateQRContent = (itemId: string): string => {
   const baseUrl = window.location.origin;
-  // Use proper path structure and encode parameters
-  return `${baseUrl}/items/borrow?id=${encodeURIComponent(itemId)}&token=${encodeURIComponent(token || '')}`;
+  return `${baseUrl}/qr-borrow/${itemId}`;
 };
 
 export default function ItemCard({ item, onUpdate }: ItemCardProps) {
@@ -29,24 +28,8 @@ export default function ItemCard({ item, onUpdate }: ItemCardProps) {
   const isAvailable = currentQuantity > 0;
 
   useEffect(() => {
-    const getQRValue = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        const token = session?.access_token || '';
-        // Ensure item.id exists before generating QR
-        if (!item?.id) {
-          console.error('Item ID not found');
-          return;
-        }
-        const qrContent = generateQRContent(item.id, token);
-        setQrValue(qrContent);
-      } catch (error) {
-        console.error('Error generating QR code:', error);
-      }
-    };
-
-    if (showQR) {
-      getQRValue();
+    if (showQR && item.id) {
+      setQrValue(generateQRContent(item.id));
     }
   }, [showQR, item.id]);
 
