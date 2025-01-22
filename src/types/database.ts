@@ -23,6 +23,7 @@ export interface Profile {
 }
 
 export interface Item {
+  total_quantity: number;
   id: string;
   name: string;
   description: string | null;
@@ -42,6 +43,7 @@ export interface Item {
 }
 
 export interface Loan {
+  [x: string]: any;
   id: string;
   item_id: string;
   borrower_id: string;

@@ -35,5 +35,5 @@ export function useInventory() {
     fetchItems();
   }, []);
 
-  return { items, loading, error, refetch: fetchItems };
+  return { items, loading, error, refetch: fetchItems, setItems }; // Add setItems to the returned object
 }
