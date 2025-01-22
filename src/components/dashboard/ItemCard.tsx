@@ -12,10 +12,11 @@ interface ItemCardProps {
   onUpdate?: (updatedItem: Item) => void;
 }
 
-// New QR code content generation
+// Update QR code generation function
 const generateQRContent = (itemId: string, token: string | null): string => {
   const baseUrl = window.location.origin;
-  return `${baseUrl}/api/qr-borrow/${itemId}?token=${token || ''}`;
+  // Use proper path structure and encode parameters
+  return `${baseUrl}/items/borrow?id=${encodeURIComponent(itemId)}&token=${encodeURIComponent(token || '')}`;
 };
 
 export default function ItemCard({ item, onUpdate }: ItemCardProps) {
@@ -29,9 +30,19 @@ export default function ItemCard({ item, onUpdate }: ItemCardProps) {
 
   useEffect(() => {
     const getQRValue = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      const token = session?.access_token || '';
-      setQrValue(generateQRContent(item.id, token));
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token || '';
+        // Ensure item.id exists before generating QR
+        if (!item?.id) {
+          console.error('Item ID not found');
+          return;
+        }
+        const qrContent = generateQRContent(item.id, token);
+        setQrValue(qrContent);
+      } catch (error) {
+        console.error('Error generating QR code:', error);
+      }
     };
 
     if (showQR) {
