@@ -11,6 +11,7 @@ import { Package, Clock, AlertCircle } from 'lucide-react';
 
 export default function StudentDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const { theme } = useTheme();
   const { items, loading: itemsLoading, error: itemsError, refetch: refetchItems } = useInventory();
   const { loans, loading: loansLoading, returnItem } = useLoans();
@@ -29,10 +30,12 @@ export default function StudentDashboard() {
 
   const availableItems = items.filter(item =>
     item.status === 'available' &&
-    (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (searchQuery === '' || 
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.location?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.categories?.name.toLowerCase().includes(searchQuery.toLowerCase()))
+      item.location?.toLowerCase().includes(searchQuery.toLowerCase())) &&
+    (selectedCategories.length === 0 || 
+      item.categories?.name && selectedCategories.includes(item.categories.name))
   );
 
   const overdueLoans = myActiveLoans.filter(loan =>
@@ -135,11 +138,12 @@ export default function StudentDashboard() {
             <SearchBar
               value={searchQuery}
               onChange={setSearchQuery}
-              placeholder="Search by name, description, location, or category..."
+              onCategoryChange={setSelectedCategories}
+              placeholder="Search by name, description, location..."
             />
           </div>
         </div>
-        {searchQuery.trim() ? (
+        {searchQuery.trim() || selectedCategories.length > 0 ? (
           availableItems.length > 0 ? (
             <ItemList items={availableItems} />
           ) : (
