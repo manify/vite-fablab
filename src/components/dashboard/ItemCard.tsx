@@ -1,37 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Item } from '../../types/database';
 import { Package, MapPin, Tag, Box } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import toast from 'react-hot-toast';
 import BorrowModal from './BorrowModal';
-import QRCode from 'react-qr-code';
 
 interface ItemCardProps {
   item: Item;
   onUpdate?: (updatedItem: Item) => void;
 }
 
-// Update QR code generation function
-const generateQRContent = (itemId: string): string => {
-  const baseUrl = window.location.origin;
-  return `${baseUrl}/qr-borrow/${itemId}`;
-};
-
 export default function ItemCard({ item, onUpdate }: ItemCardProps) {
-  const [showQR, setShowQR] = useState(false);
-  const [qrValue, setQrValue] = useState<string>('');
   const [showBorrowModal, setShowBorrowModal] = useState(false);
   const [currentQuantity, setCurrentQuantity] = useState(item.quantity);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
   const isAvailable = currentQuantity > 0;
-
-  useEffect(() => {
-    if (showQR && item.id) {
-      setQrValue(generateQRContent(item.id));
-    }
-  }, [showQR, item.id]);
 
   const handleBorrow = async (data: { 
     expected_return_date: string;
@@ -142,39 +127,6 @@ export default function ItemCard({ item, onUpdate }: ItemCardProps) {
               </div>
             )}
           </div>
-          <div className="mt-4">
-            {item.id && (
-              <div className="flex flex-col items-center">
-                <div 
-                  className="p-4 bg-white rounded-lg cursor-pointer hover:shadow-lg transition-shadow"
-                  onClick={() => setShowQR(!showQR)}
-                >
-                  <QRCode 
-                    value={qrValue || `${window.location.origin}/loading`}
-                    size={100}
-                    level="H"
-                  />
-                </div>
-                <span className="text-sm text-gray-500 mt-2">Scan to borrow</span>
-              </div>
-            )}
-          </div>
-
-          {showQR && qrValue && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" 
-                 onClick={() => setShowQR(false)}>
-              <div className="bg-white p-8 rounded-lg" onClick={e => e.stopPropagation()}>
-                <QRCode 
-                  value={qrValue}
-                  size={256}
-                  level="H"
-                />
-                <p className="text-center mt-4 text-sm text-gray-600">
-                  Scan this QR code to borrow the item directly
-                </p>
-              </div>
-            </div>
-          )}
 
           <button
             onClick={() => setShowBorrowModal(true)}
@@ -198,3 +150,4 @@ export default function ItemCard({ item, onUpdate }: ItemCardProps) {
     </>
   );
 }
+  
