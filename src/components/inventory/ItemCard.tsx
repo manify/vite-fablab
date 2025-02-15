@@ -1,6 +1,6 @@
 import React from 'react';
 import { Item } from '../../types/database';
-import { Package, MapPin, Info, Box } from 'lucide-react';
+import { Package, MapPin, Info, Tag, Hash } from 'lucide-react';
 import QRCode from 'qrcode.react';
 
 interface ItemCardProps {
@@ -29,6 +29,7 @@ export default function ItemCard({ item, onEdit }: ItemCardProps) {
             item.status === 'available' ? 'bg-green-100 text-green-800' :
             item.status === 'borrowed' ? 'bg-blue-100 text-blue-800' :
             item.status === 'maintenance' ? 'bg-yellow-100 text-yellow-800' :
+            item.status === 'unavailable' ? 'bg-gray-100 text-gray-800' :
             'bg-red-100 text-red-800'
           }`}>
             {item.status}
@@ -36,8 +37,21 @@ export default function ItemCard({ item, onEdit }: ItemCardProps) {
         </div>
 
         <div className="flex items-center text-sm text-gray-600">
-          <Box className="w-4 h-4 mr-2" />
-          <span>Quantity: {item.quantity}</span>
+          <Tag className="w-4 h-4 mr-2" />
+          <span>Category: </span>
+          <span className="ml-2">{item.categories?.name || 'Uncategorized'}</span>
+        </div>
+
+        <div className="flex items-center text-sm text-gray-600">
+          <Hash className="w-4 h-4 mr-2" />
+          <span>Quantity: </span>
+          <span className={`ml-2 font-medium ${
+            item.quantity === 0 ? 'text-red-600' : 
+            item.quantity < 3 ? 'text-yellow-600' : 
+            'text-green-600'
+          }`}>
+            {item.quantity || 0} available
+          </span>
         </div>
         
         {item.location && (

@@ -8,6 +8,7 @@ import ItemList from '../components/dashboard/ItemList';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { format } from 'date-fns';
 import { Package, Clock, AlertCircle } from 'lucide-react';
+import BorrowButton from '../components/dashboard/BorrowButton';
 
 export default function StudentDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -58,6 +59,7 @@ export default function StudentDashboard() {
             Student Dashboard
           </h1>
         </div>
+        <BorrowButton />
       </div>
 
       {/* Stats Cards */}

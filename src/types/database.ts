@@ -1,6 +1,6 @@
 export type UserRole = 'student' | 'admin' | 'super_admin';
-export type ItemStatus = 'available' | 'borrowed' | 'maintenance' | 'lost';
-export type NotificationType = 'due_date' | 'overdue' | 'return_reminder' | 'system';
+export type ItemStatus = 'available' | 'borrowed' | 'maintenance' | 'lost' | 'unavailable';
+export type NotificationType = 'borrow_request' | 'overdue' | 'return_reminder' | 'system';
 
 export interface SecurityQuestions {
   id: string;
@@ -19,31 +19,26 @@ export interface Profile {
   department: string | null;
   created_at: string;
   updated_at: string;
-  avatar_url: string | null;
 }
 
 export interface Item {
-  total_quantity: number;
   id: string;
   name: string;
   description: string | null;
   category_id: string;
   qr_code: string;
-  barcode: string; 
   status: ItemStatus;
   condition: string | null;
   location: string | null;
+  quantity: number;
   created_at: string;
   updated_at: string;
   categories?: {
-    id(id: any): boolean;
     name: string;
   };
-  quantity: number;
 }
 
 export interface Loan {
-  [x: string]: any;
   id: string;
   item_id: string;
   borrower_id: string;
@@ -65,4 +60,16 @@ export interface Loan {
   approver?: {
     full_name: string;
   };
+}
+
+export interface Notification {
+  id: string;
+  user_id: string;
+  type: NotificationType;
+  title: string;
+  message: string;
+  read: boolean;
+  created_at: string;
+  loan_id?: string;
+  loan?: Loan;
 }
