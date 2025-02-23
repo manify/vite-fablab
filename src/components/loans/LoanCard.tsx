@@ -22,7 +22,7 @@ export default function LoanCard({ loan, onReturn }: LoanCardProps) {
             </div>
             <div className="mt-1 flex items-center space-x-2 text-sm text-gray-600">
               <User className="w-4 h-4" />
-              <span>{loan.profiles?.full_name}</span>
+              <span>borrowed by: {loan.borrower?.full_name}</span>
             </div>
           </div>
           
