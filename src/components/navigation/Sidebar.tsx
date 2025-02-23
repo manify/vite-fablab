@@ -2,6 +2,7 @@ import React from 'react';
 import { LayoutDashboard, Package, BookOpen, User } from 'lucide-react';
 import NavLink from './NavLink';
 import { useAuth } from '../../contexts/AuthContext';
+import { isSuperAdmin } from '../../utils/roleUtils';
 
 export default function Sidebar() {
   const { profile } = useAuth();
@@ -9,7 +10,7 @@ export default function Sidebar() {
   const navigation = [
     { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
     { to: '/inventory', icon: Package, label: 'Inventory' },
-    { to: '/loans', icon: BookOpen, label: 'Loans' },
+    ...(!isSuperAdmin(profile) ? [{ to: '/loans', icon: BookOpen, label: 'Loans' }] : []),
     { to: '/profile', icon: User, label: 'Profile' },
   ];
 
