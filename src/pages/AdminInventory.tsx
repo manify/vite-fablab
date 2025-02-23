@@ -49,13 +49,13 @@ export default function AdminInventory() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900">Inventory Management</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Inventory Management</h1>
         <button
           onClick={() => {
             setSelectedItem(undefined);
             setShowForm(true);
           }}
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          className="flex items-center px-4 py-2 bg-black text-white rounded-md hover:bg-yellow-400 hover:text-black"
         >
           <Plus className="w-5 h-5 mr-2" />
           Add Item

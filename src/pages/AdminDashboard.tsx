@@ -15,12 +15,8 @@ export default function AdminDashboard() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <img 
-            src="/images/labcesi-logo.jpg" 
-            alt="Lab'CESI Logo" 
-            className="w-14 h-auto"
-          />
-          <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+         
+          <h1 className="text-2xl font-bold text-black dark:text-white">Admin Dashboard</h1>
         </div>
       </div>
 
