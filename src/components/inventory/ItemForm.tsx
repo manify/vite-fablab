@@ -117,7 +117,7 @@ export default function ItemForm({ item, onSubmit, onClose }: ItemFormProps) {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="px-4 py-2 bg-yellow-400 text-black font-medium rounded-md hover:bg-yellow-500"
             >
               {item ? 'Update' : 'Create'}
             </button>
