@@ -87,6 +87,7 @@ export default function BorrowButton({ className }: BorrowButtonProps) {
 
       {showBorrowModal && selectedItem && (
         <BorrowModal
+          item={selectedItem}
           onClose={() => setShowBorrowModal(false)}
           onSubmit={handleBorrow}
         />

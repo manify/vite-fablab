@@ -143,6 +143,7 @@ export default function ItemCard({ item, onUpdate }: ItemCardProps) {
 
       {showBorrowModal && (
         <BorrowModal
+        item={item}
           onClose={() => setShowBorrowModal(false)}
           onSubmit={handleBorrow}
         />

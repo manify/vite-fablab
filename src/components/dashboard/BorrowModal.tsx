@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { addDays, format } from 'date-fns';
+import { Item } from '../../types/database';
 
 interface BorrowModalProps {
   onClose: () => void;
@@ -9,9 +10,10 @@ interface BorrowModalProps {
     project_name?: string;
     course_details?: string;
   }) => Promise<void>;
+  item?: Item;
 }
 
-export default function BorrowModal({ onClose, onSubmit }: BorrowModalProps) {
+export default function BorrowModal({ onClose, onSubmit, item }: BorrowModalProps) {
   const [formData, setFormData] = useState({
     expected_return_date: format(addDays(new Date(), 7), 'yyyy-MM-dd'),
     project_name: '',
@@ -32,6 +34,15 @@ export default function BorrowModal({ onClose, onSubmit }: BorrowModalProps) {
             <X className="w-5 h-5" />
           </button>
         </div>
+
+        {item && (
+          <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+            <h3 className="font-medium text-gray-900">{item.name}</h3>
+            {item.description && (
+              <p className="text-sm text-gray-500 mt-1">{item.description}</p>
+            )}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -91,7 +102,7 @@ export default function BorrowModal({ onClose, onSubmit }: BorrowModalProps) {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="px-4 py-2 bg-yellow-400 text-black font-medium rounded-md hover:bg-yellow-500"
             >
               Borrow
             </button>

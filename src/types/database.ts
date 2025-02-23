@@ -2,14 +2,7 @@ export type UserRole = 'student' | 'admin' | 'super_admin';
 export type ItemStatus = 'available' | 'borrowed' | 'maintenance' | 'lost' | 'unavailable';
 export type NotificationType = 'borrow_request' | 'overdue' | 'return_reminder' | 'system';
 
-export interface SecurityQuestions {
-  id: string;
-  user_id: string;
-  first_car: string;
-  first_country: string;
-  created_at: string;
-  updated_at: string;
-}
+
 
 export interface Profile {
   id: string;
@@ -39,6 +32,7 @@ export interface Item {
 }
 
 export interface Loan {
+  [x: string]: any;
   id: string;
   item_id: string;
   borrower_id: string;
@@ -73,3 +67,4 @@ export interface Notification {
   loan_id?: string;
   loan?: Loan;
 }
+
