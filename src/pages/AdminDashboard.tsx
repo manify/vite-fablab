@@ -22,7 +22,7 @@ export default function AdminDashboard() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-black text-white rounded-lg shadow-md p-6">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-yellow-400">Total Items</p>
@@ -32,7 +32,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-black text-white rounded-lg shadow-md p-6">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-yellow-400">Active Loans</p>
@@ -42,7 +42,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-black text-white rounded-lg shadow-md p-6">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-yellow-400">Available Items</p>
